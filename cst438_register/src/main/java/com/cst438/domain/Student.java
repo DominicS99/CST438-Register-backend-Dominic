@@ -56,4 +56,8 @@ public class Student {
 				+ statusCode + ", status=" + status + "]";
 	}
 
+	public Student orElse(Object object) {
+		return null;
+	}
+
 }
