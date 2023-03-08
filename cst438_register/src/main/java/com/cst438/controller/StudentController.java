@@ -12,6 +12,7 @@ public class StudentController {
 	@Autowired
 	StudentRepository studentRepo;
 
+	// Creates a new student, unless email is already associated with another student.
 	@PostMapping("/student/createNewStudent")
 	public void createNewStudent(String email, String name) throws Exception {
 		Student student = studentRepo.findByEmail(email).orElse(null);
@@ -24,6 +25,7 @@ public class StudentController {
 		studentRepo.save(student);
 	}
 	
+	// Changes the hold on a student
 	@PostMapping("/student/enableHold")
 	public void changeHold(String email) throws Exception {
 		Student student = studentRepo.findByEmail(email).orElse(null);
