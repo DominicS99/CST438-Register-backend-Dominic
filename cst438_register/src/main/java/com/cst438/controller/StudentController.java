@@ -1,16 +1,37 @@
 package com.cst438.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.cst438.domain.Student;
+import com.cst438.domain.StudentDTO;
 import com.cst438.domain.StudentRepository;
+import com.cst438.domain.CourseRepository;
+import com.cst438.domain.EnrollmentRepository;
+import com.cst438.domain.ScheduleDTO;
+import com.cst438.service.GradebookService;
 
 @RestController
 public class StudentController {
 	@Autowired
 	StudentRepository studentRepo;
+	
+	@Autowired
+	CourseRepository courseRepo;
+	
+	@Autowired
+	EnrollmentRepository enrollmentRepo;
+	
+	@Autowired
+	GradebookService gbService;
 
 	// Creates a new student, unless email is already associated with another student.
 	@PostMapping("/student/createNewStudent")
