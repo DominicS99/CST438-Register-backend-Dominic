@@ -5,7 +5,6 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.cst438.domain.CourseDTOG;
 import com.cst438.domain.Enrollment;
@@ -31,12 +30,12 @@ public class GradebookServiceMQ extends GradebookService {
 	
 	// send message to grade book service about new student enrollment in course
 	@Override
-	public void enrollStudent(String student_email, String student_name, int course_id) {
+	public void enrollStudent(String sEmail, String sName, int courseId) {
 		 
-		// TODO 
 		// create EnrollmentDTO and send to gradebookQueue
-		
-		System.out.println("Message send to gradbook service for student "+ student_email +" " + course_id);  
+		EnrollmentDTO enrollObj = new EnrollmentDTO(sEmail, sName, courseId);
+		rabbitTemplate.convertAndSend(gradebookQueue.getName(), enrollObj);
+		System.out.println("Message send to gradbook service for student "+ sEmail +" " + courseId);  
 		
 	}
 	
@@ -44,8 +43,12 @@ public class GradebookServiceMQ extends GradebookService {
 	public void receive(CourseDTOG courseDTOG) {
 		System.out.println("Receive enrollment :" + courseDTOG);
 
-		//TODO 
 		// for each student grade in courseDTOG,  find the student enrollment entity, update the grade and save back to enrollmentRepository.
+		for (CourseDTOG.GradeDTO gradeObj : courseDTOG.grades) {
+			Enrollment currEnroll = enrollmentRepository.findByEmailAndCourseId(gradeObj.student_email, courseDTOG.course_id);
+			currEnroll.setCourseGrade(gradeObj.grade);
+			enrollmentRepository.save(currEnroll);
+		}
 	}
 
 }
