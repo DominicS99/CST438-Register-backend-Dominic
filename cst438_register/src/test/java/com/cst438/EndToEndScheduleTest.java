@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,7 +22,7 @@ import com.cst438.domain.EnrollmentRepository;
 
 /*
  * This example shows how to use selenium testing using the web driver 
- * with Chrome browser.
+ * with Safari browser.
  * 
  *  - Buttons, input, and anchor elements are located using XPATH expression.
  *  - onClick( ) method is used with buttons and anchor tags.
@@ -37,8 +37,6 @@ import com.cst438.domain.EnrollmentRepository;
 
 @SpringBootTest
 public class EndToEndScheduleTest {
-
-	public static final String CHROME_DRIVER_FILE_LOCATION = "C:/chromedriver_win32/chromedriver.exe";
 
 	public static final String URL = "http://localhost:3000";
 
@@ -87,8 +85,7 @@ public class EndToEndScheduleTest {
 		// IE 		webdriver.ie.driver 		InternetExplorerDriver
 		//@formatter:on
 
-		System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_FILE_LOCATION);
-		WebDriver driver = new ChromeDriver();
+		WebDriver driver = new SafariDriver();
 		// Puts an Implicit wait for 10 seconds before throwing exception
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 

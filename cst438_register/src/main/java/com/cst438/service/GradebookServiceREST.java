@@ -20,7 +20,6 @@ public class GradebookServiceREST extends GradebookService {
 	@Override
 	public void enrollStudent(String sEmail, String sName, int courseId) {
 		
-		//TODO  complete this method in homework 4
 		EnrollmentDTO enroll = new EnrollmentDTO();
 		enroll.course_id = courseId;
 		enroll.studentEmail = sEmail;
